@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
-
 const AboutSection = () => {
-  return (
-    <section className="py-20 bg-section-bg">
+  return <section className="py-20 bg-section-bg">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* About Us Badge */}
@@ -15,13 +13,9 @@ const AboutSection = () => {
           
           {/* Main Content */}
           <div className="space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-              At Passet, We understand acquiring a business is hard; we know - we've done it.
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Acquiring a business is hard; we know - we've done it.</h2>
             
-            <p className="text-xl text-gray-600 leading-relaxed">
-              If you've identified an internet that you want to acquire - We're here to help with the capital & know how.
-            </p>
+            <p className="text-xl text-gray-600 leading-relaxed">If you've identified an internet business that you want to takeover - we're here to help with the capital & know how</p>
             
             <Button variant="outline" size="lg" className="group border-primary text-primary hover:bg-primary hover:text-white">
               Get in Touch
@@ -32,8 +26,6 @@ const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default AboutSection;

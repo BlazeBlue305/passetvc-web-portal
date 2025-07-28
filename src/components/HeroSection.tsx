@@ -1,22 +1,17 @@
 import { Button } from "@/components/ui/button";
 import heroMountains from "@/assets/hero-mountains.jpg";
-
 const HeroSection = () => {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient overlay */}
       <div className="absolute inset-0 bg-gradient-hero"></div>
       
       {/* Mountain background image */}
-      <div 
-        className="absolute inset-0 opacity-40"
-        style={{
-          backgroundImage: `url(${heroMountains})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center bottom',
-          backgroundRepeat: 'no-repeat'
-        }}
-      ></div>
+      <div className="absolute inset-0 opacity-40" style={{
+      backgroundImage: `url(${heroMountains})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center bottom',
+      backgroundRepeat: 'no-repeat'
+    }}></div>
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-20 lg:py-32">
@@ -28,9 +23,7 @@ const HeroSection = () => {
               <span className="block">We'll Fund You!</span>
             </h1>
             
-            <p className="text-xl text-white/90 max-w-2xl leading-relaxed">
-              At Passet, We back experienced operators with the capital, playbooks, and expert support needed to acquire and grow subscription-based mobile apps.
-            </p>
+            <p className="text-xl max-w-2xl leading-relaxed text-red-600">At Passet - we back experienced operators with the capital, playbooks, and expert support needed to acquire and grow subscription mobile apps</p>
             
             <Button variant="hero" size="lg" className="group">
               SET UP A MEETING NOW
@@ -51,8 +44,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
