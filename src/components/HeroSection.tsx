@@ -23,7 +23,7 @@ const HeroSection = () => {
               <span className="block">We'll Fund You!</span>
             </h1>
             
-            <p className="text-xl max-w-2xl leading-relaxed text-red-600">At Passet - we back experienced operators with the capital, playbooks, and expert support needed to acquire and grow subscription mobile apps</p>
+            <p className="text-xl max-w-2xl leading-relaxed text-slate-50">At Passet - we back experienced operators with the capital, playbooks, and expert support needed to acquire and grow subscription mobile apps</p>
             
             <Button variant="hero" size="lg" className="group">
               SET UP A MEETING NOW
