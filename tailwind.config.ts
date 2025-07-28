@@ -61,7 +61,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				'hero-text': 'hsl(var(--hero-text))',
+				'dark-bg': 'hsl(var(--dark-bg))',
+				'dark-card': 'hsl(var(--dark-card))',
+				'section-bg': 'hsl(var(--section-bg))'
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-hero': 'var(--gradient-hero)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
