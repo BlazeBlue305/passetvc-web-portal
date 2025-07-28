@@ -38,9 +38,7 @@ const HeroSection = () => {
             <div className="text-6xl lg:text-8xl font-bold text-white mb-4">
               11M+
             </div>
-            <p className="text-xl text-white/80 max-w-md ml-auto">
-              Our founders have scaled and sold mobile apps with 10M+ users.
-            </p>
+            <p className="text-xl text-white/80 max-w-md ml-auto">Our founders have scaled and sold mobile apps with 11M+ users.</p>
           </div>
         </div>
       </div>
