@@ -25,7 +25,12 @@ const HeroSection = () => {
             
             <p className="text-xl max-w-2xl leading-relaxed text-slate-50">At Passet - we back experienced operators with the capital, playbooks, and expert support needed to acquire and grow subscription mobile apps</p>
             
-            <Button variant="hero" size="lg" className="group">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="group"
+              onClick={() => window.open('https://tinyurl.com/2kwan9vz', '_blank')}
+            >
               SET UP A MEETING NOW
               <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
