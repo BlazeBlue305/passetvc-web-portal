@@ -1,6 +1,5 @@
 const ServicesSection = () => {
-  return (
-    <section className="py-20 bg-white">
+  return <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* What We Offer Badge */}
         <div className="flex items-center justify-center gap-3 mb-16">
@@ -36,8 +35,8 @@ const ServicesSection = () => {
                 Up to 50% of the capital requirement.
               </p>
               <div className="space-y-2 text-sm text-gray-600">
-                <p className="font-medium text-primary">P.S.</p>
-                <p>We're open to discussing additional support systems or requirements based on your specific business needs — just let us know during the meeting so we can explore how best to help you succeed.</p>
+                
+                
               </div>
             </div>
           </div>
@@ -56,8 +55,6 @@ const ServicesSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ServicesSection;
