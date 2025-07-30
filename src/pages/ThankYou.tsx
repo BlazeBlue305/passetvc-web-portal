@@ -20,7 +20,7 @@ const ThankYou = () => {
           <Button variant="cta" size="lg" onClick={() => navigate('/')} className="w-full md:w-auto h-14 text-lg font-semibold">
             Back to Home
           </Button>
-          <Button variant="outline" size="lg" onClick={() => navigate('/')} className="w-full md:w-auto h-14 text-lg font-semibold bg-white/10 text-white border-white/30 hover:bg-white/20">Schedule a Meet</Button>
+          <Button variant="outline" size="lg" onClick={() => window.open('https://tinyurl.com/2kwan9vz', '_blank')} className="w-full md:w-auto h-14 text-lg font-semibold bg-white/10 text-white border-white/30 hover:bg-white/20">Schedule a Meet</Button>
         </div>
       </div>
     </div>;
