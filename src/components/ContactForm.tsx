@@ -91,7 +91,7 @@ const ContactForm = () => {
                 
                 <Input name="email" type="email" placeholder="Email Id" value={formData.email} onChange={handleChange} className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" required />
                 
-                
+                <Input name="phone" type="tel" placeholder="Phone Number" value={formData.phone} onChange={handleChange} className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" />
                 
                 <Textarea name="message" placeholder="Anything you want to add!" value={formData.message} onChange={handleChange} className="min-h-32 rounded-3xl bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg resize-none" />
                 
