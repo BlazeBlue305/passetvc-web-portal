@@ -5,6 +5,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+
+// Input validation constants
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 255;
+const MAX_PHONE_LENGTH = 50;
+const MAX_MESSAGE_LENGTH = 2000;
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -17,33 +23,92 @@ const ContactForm = () => {
     toast
   } = useToast();
   const navigate = useNavigate();
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const validateForm = (): { isValid: boolean; errors: string[] } => {
+    const errors: string[] = [];
+    
+    // Required field validation
+    if (!formData.name.trim()) {
+      errors.push("Name is required");
+    } else if (formData.name.length > MAX_NAME_LENGTH) {
+      errors.push(`Name must be ${MAX_NAME_LENGTH} characters or less`);
+    }
+    
+    if (!formData.email.trim()) {
+      errors.push("Email is required");
+    } else if (!validateEmail(formData.email)) {
+      errors.push("Please provide a valid email address");
+    } else if (formData.email.length > MAX_EMAIL_LENGTH) {
+      errors.push(`Email must be ${MAX_EMAIL_LENGTH} characters or less`);
+    }
+    
+    // Optional field validation
+    if (formData.phone && formData.phone.length > MAX_PHONE_LENGTH) {
+      errors.push(`Phone number must be ${MAX_PHONE_LENGTH} characters or less`);
+    }
+    
+    if (formData.message && formData.message.length > MAX_MESSAGE_LENGTH) {
+      errors.push(`Message must be ${MAX_MESSAGE_LENGTH} characters or less`);
+    }
+    
+    return { isValid: errors.length === 0, errors };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic validation
-    if (!formData.name || !formData.email) {
+    // Enhanced validation
+    const validation = validateForm();
+    if (!validation.isValid) {
       toast({
-        title: "Please fill in all required fields",
+        title: "Please fix the following errors:",
+        description: validation.errors.join(", "),
         variant: "destructive"
       });
       return;
     }
+
     setIsSubmitting(true);
     try {
-      const {
-        error
-      } = await supabase.from('contact_submissions').insert([formData]);
+      // Use secure edge function instead of direct database access
+      const { data, error } = await supabase.functions.invoke('submit-contact', {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim() || undefined,
+          message: formData.message.trim() || undefined,
+        }
+      });
+
       if (error) {
         throw error;
       }
 
-      // Navigate to thank you page
+      // Check for application-level errors
+      if (data?.error) {
+        throw new Error(data.error);
+      }
+
+      // Navigate to thank you page on success
       navigate('/thank-you');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting form:', error);
+      
+      let errorMessage = "An unexpected error occurred. Please try again.";
+      
+      if (error.message?.includes('Too many requests')) {
+        errorMessage = "Too many requests. Please wait a moment before trying again.";
+      } else if (error.message?.includes('Validation failed')) {
+        errorMessage = "Please check your input and try again.";
+      }
+      
       toast({
         title: "Error submitting form",
-        description: "Please try again later.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
@@ -87,13 +152,65 @@ const ContactForm = () => {
               
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-6">
-                <Input name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" required />
+                <div className="space-y-2">
+                  <Input 
+                    name="name" 
+                    placeholder="Name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    maxLength={MAX_NAME_LENGTH}
+                    className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" 
+                    required 
+                  />
+                  <div className="text-right text-sm text-white/70">
+                    {formData.name.length}/{MAX_NAME_LENGTH}
+                  </div>
+                </div>
                 
-                <Input name="email" type="email" placeholder="Email Id" value={formData.email} onChange={handleChange} className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" required />
+                <div className="space-y-2">
+                  <Input 
+                    name="email" 
+                    type="email" 
+                    placeholder="Email Id" 
+                    value={formData.email} 
+                    onChange={handleChange} 
+                    maxLength={MAX_EMAIL_LENGTH}
+                    className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" 
+                    required 
+                  />
+                  <div className="text-right text-sm text-white/70">
+                    {formData.email.length}/{MAX_EMAIL_LENGTH}
+                  </div>
+                </div>
                 
-                <Input name="phone" type="tel" placeholder="Phone Number" value={formData.phone} onChange={handleChange} className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" />
+                <div className="space-y-2">
+                  <Input 
+                    name="phone" 
+                    type="tel" 
+                    placeholder="Phone Number" 
+                    value={formData.phone} 
+                    onChange={handleChange} 
+                    maxLength={MAX_PHONE_LENGTH}
+                    className="h-14 rounded-full bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg" 
+                  />
+                  <div className="text-right text-sm text-white/70">
+                    {formData.phone.length}/{MAX_PHONE_LENGTH}
+                  </div>
+                </div>
                 
-                <Textarea name="message" placeholder="Anything you want to add!" value={formData.message} onChange={handleChange} className="min-h-32 rounded-3xl bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg resize-none" />
+                <div className="space-y-2">
+                  <Textarea 
+                    name="message" 
+                    placeholder="Anything you want to add!" 
+                    value={formData.message} 
+                    onChange={handleChange} 
+                    maxLength={MAX_MESSAGE_LENGTH}
+                    className="min-h-32 rounded-3xl bg-white/95 backdrop-blur-sm border-0 text-gray-900 placeholder:text-gray-500 text-lg resize-none" 
+                  />
+                  <div className="text-right text-sm text-white/70">
+                    {formData.message.length}/{MAX_MESSAGE_LENGTH}
+                  </div>
+                </div>
                 
                 <Button type="submit" variant="cta" size="lg" className="w-full h-14 text-lg font-semibold group" disabled={isSubmitting}>
                   {isSubmitting ? "SUBMITTING..." : "SET UP A MEETING NOW"}
