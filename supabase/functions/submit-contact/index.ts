@@ -1,9 +1,11 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.52.1';
+import { Resend } from "npm:resend@2.0.0";
 
 const supabaseUrl = 'https://fqillsrszasalfhunilr.supabase.co';
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -176,6 +178,27 @@ serve(async (req) => {
     }
 
     console.log(`Contact form submitted successfully from IP: ${clientIP}`);
+    
+    // Send notification emails
+    try {
+      await resend.emails.send({
+        from: "Contact Form <onboarding@resend.dev>",
+        to: ["contactus@kalagato.co", "aman@kalagato.co"],
+        subject: "New Contact Form Submission",
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${validation.sanitizedData!.name}</p>
+          <p><strong>Email:</strong> ${validation.sanitizedData!.email}</p>
+          ${validation.sanitizedData!.phone ? `<p><strong>Phone:</strong> ${validation.sanitizedData!.phone}</p>` : ''}
+          ${validation.sanitizedData!.message ? `<p><strong>Message:</strong> ${validation.sanitizedData!.message}</p>` : ''}
+          <p><strong>Submitted from IP:</strong> ${clientIP}</p>
+        `,
+      });
+      console.log('Notification emails sent successfully');
+    } catch (emailError) {
+      console.error('Failed to send notification emails:', emailError);
+      // Don't fail the request if email sending fails
+    }
     
     return new Response(JSON.stringify({ 
       success: true, 
