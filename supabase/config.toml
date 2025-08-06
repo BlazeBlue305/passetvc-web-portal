@@ -8,14 +8,14 @@ extra_search_path = ["public", "extensions"]
 max_rows = 1000
 
 [db]
-enabled = true
+
 port = 54322
 shadow_port = 54320
 major_version = 15
 
 [realtime]
 enabled = true
-ip_version = "ipv4"
+ip_version = "IPv6"
 
 [studio]
 enabled = true
@@ -45,4 +45,3 @@ verify_jwt = false
 
 [edge_runtime]
 enabled = true
-ip_version = "ipv4"
