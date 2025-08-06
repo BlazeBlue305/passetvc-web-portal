@@ -2,15 +2,15 @@
 
 import { ArrowRight } from 'lucide-react';
 import React from 'react';
-import { Link } from 'react-router-dom'; // 1. Import the Link component
+import { Link } from 'react-router-dom'; 
 
 const Header: React.FC = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/10">
       <div className="container mx-auto flex items-center justify-between px-4 py-2">
-        {/* Left Side: Logo and Brand Name */}
+        {/* left side logo ANd BrANDH NAME */}
         <div className="flex items-center gap-2">
-          {/* 2. Wrap the logo in a Link */}
+          {/* 2. WAPED LOGO AND LINK*/}
           <Link to="/">
             <img
               src="/logo.svg"
@@ -21,13 +21,13 @@ const Header: React.FC = () => {
             />
           </Link>
           
-          {/* 3. Change the div to a Link */}
+          {/* 3. CHANEG LIn ed to a div */}
           <Link to="/" className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-bold rounded-full text-sm cursor-pointer">
             PASSET.VC
           </Link>
         </div>
 
-        {/* Right Side: Sign Up Button */}
+        {/* signUp Buton right side */}
         <a
           href="/signup"
           target="_blank"
